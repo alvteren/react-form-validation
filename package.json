@@ -1,0 +1,22 @@
+{
+  "name": "re-validate",
+  "version": "0.0.1",
+  "description": "Yet another form validation library for React ಠ_ಠ",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/feerzlay/re-validate.git"
+  },
+  "keywords": [
+    "react",
+    "form",
+    "validation"
+  ],
+  "author": "Denis Yakshov",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/feerzlay/re-validate/issues"
+  },
+  "homepage": "https://github.com/feerzlay/re-validate#readme"
+}
