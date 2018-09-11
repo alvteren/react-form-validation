@@ -1,6 +1,6 @@
 {
   "name": "re-validate",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Yet another form validation library for React ಠ_ಠ",
   "main": "build/index.js",
   "scripts": {
