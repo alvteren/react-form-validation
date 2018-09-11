@@ -61,7 +61,7 @@ export default class Application extends Component {
             name="accept"
             value={accept}
             onChange={this.onChange}
-            validate="required|min:8"
+            validate="required:true"
             invalid={!!errors.accept}
           />
           <button type="submit" className="btn btn-primary">
