@@ -1,13 +1,20 @@
+import './Application.scss';
+
 import React, { Component } from 'react';
-import Form from './components/UI/Form';
-import FormGroup from './components/UI/FormGroup';
-import Input from './components/UI/Input';
+
+import Button from '@material-ui/core/Button';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+
 import Checkbox from './components/UI/Checkbox';
+import Form from './components/UI/Form';
+import TextField from './components/UI/TextField';
 
 export default class Application extends Component {
   state = {
     name: '',
     password: '',
+    confirm: '',
     accept: false,
     errors: {}
   };
@@ -31,45 +38,67 @@ export default class Application extends Component {
   };
 
   render() {
-    const { name, password, accept, errors } = this.state;
+    const { name, password, confirm, accept, errors } = this.state;
 
     return (
-      <div className="container">
-        <Form onSubmit={this.onSubmit} onErrorsChange={this.onErrorsChange} autoComplete="false">
-          <input autoComplete="false" name="hidden" type="text" style={{ display: 'none' }} />
-          <FormGroup label="Name" error={errors.name}>
-            <Input
-              name="name"
-              value={name}
-              onChange={this.onChange}
-              validate="required"
-              autoComplete="off"
-            />
-          </FormGroup>
-          <FormGroup label="Password" error={errors.password}>
-            <Input
-              type="password"
-              name="password"
-              value={password}
-              onChange={this.onChange}
-              validate="required|min:8"
-              autoComplete="new-password"
-            />
-          </FormGroup>
+      <Paper className="application">
+        <Typography variant="headline" align="center">
+          Sign In
+        </Typography>
+        <Form onSubmit={this.onSubmit} onErrorsChange={this.onErrorsChange}>
+          <TextField
+            name="name"
+            label="Name"
+            value={name}
+            onChange={this.onChange}
+            validate="required"
+            error={errors.name}
+            margin="normal"
+            fullWidth
+          />
+          <TextField
+            type="password"
+            name="password"
+            label="Password"
+            value={password}
+            onChange={this.onChange}
+            validate="required|min:8"
+            error={errors.password}
+            autoComplete="new-password"
+            margin="normal"
+            fullWidth
+          />
+          <TextField
+            type="password"
+            name="confirm"
+            label="Confirm password"
+            value={confirm}
+            onChange={this.onChange}
+            validate="required|confirms:password"
+            error={errors.confirm}
+            autoComplete="new-password"
+            margin="normal"
+            fullWidth
+          />
           <Checkbox
-            label="I accept the terms..."
             name="accept"
+            label="I accept the terms in the license agreement"
             value={accept}
             onChange={this.onChange}
             validate="required:true"
             invalid={!!errors.accept}
           />
-          <button type="submit" className="btn btn-primary">
-            {' '}
-            Submit{' '}
-          </button>
+          <Button
+            className="application__submit"
+            type="submit"
+            color="primary"
+            variant="contained"
+            fullWidth
+          >
+            Submit
+          </Button>
         </Form>
-      </div>
+      </Paper>
     );
   }
 }

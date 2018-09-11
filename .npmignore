@@ -6,4 +6,5 @@ source/
 .gitignore
 .prettierignore
 .prettierrc
+jsconfig.json
 yarn.lock

@@ -47,7 +47,7 @@ Now you have everything you need:
 export default class Page extends React.Component {
   state = {
     name: '',
-    password: ''
+    password: '',
     errors: {}
   };
 

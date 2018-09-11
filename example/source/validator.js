@@ -2,7 +2,7 @@ import { createValidator } from 're-validate';
 
 const rules = {
   required: (name, value, values, checkbox) => {
-    if (checkbox ? !value : !`${value}`.length) {
+    if (checkbox ? !value : !value.length) {
       return 'Can\'t be empty';
     }
     return null;
@@ -10,6 +10,12 @@ const rules = {
   min: (name, value, values, min) => {
     if (value.length < min) {
       return `Must be at least ${min} characters long`;
+    }
+    return null;
+  },
+  confirms: (name, value, values, target) => {
+    if (value !== values[target]) {
+      return 'Passwords must match';
     }
     return null;
   }
