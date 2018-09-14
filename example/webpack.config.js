@@ -1,13 +1,16 @@
 const path = require('path');
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const env = process.env.NODE_ENV || 'development';
 
 module.exports = {
-  mode: 'development',
-  devtool: 'eval-source-map',
+  mode: env,
+  devtool: env === 'production' ? 'eval' : 'eval-source-map',
   entry: './example/source/index.js',
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, 'public')
+    path: path.resolve(__dirname, 'out')
   },
   module: {
     rules: [
@@ -38,5 +41,10 @@ module.exports = {
       'react-form-validation': path.resolve(__dirname, '../source')
     }
   },
-  plugins: [new webpack.NoEmitOnErrorsPlugin()]
+  plugins: [
+    new webpack.NoEmitOnErrorsPlugin(),
+    new HtmlWebpackPlugin({
+      template: path.resolve(__dirname, './public/index.html')
+    })
+  ]
 };

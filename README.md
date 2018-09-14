@@ -1,6 +1,8 @@
 # react-form-validation
 Yet another form validation library for React ಠ_ಠ
 
+[DEMO](https://feerzlay.github.io/react-form-validation/)
+
 ## Usage
 
 Define your rules and create validator:
