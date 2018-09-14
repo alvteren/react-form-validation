@@ -6,8 +6,9 @@
   "scripts": {
     "start": "webpack-serve --config ./example/webpack.config.js --content ./example/public",
     "lint-staged": "lint-staged",
-    "transpile": "babel source -d build --minified --copy-files",
-    "prepublishOnly": "npm run transpile"
+    "clean": "rimraf ./out/*",
+    "transpile": "babel source -d out --minified --copy-files",
+    "prepublishOnly": "npm run clean && npm run transpile"
   },
   "repository": {
     "type": "git",
@@ -60,6 +61,7 @@
     "prop-types": "^15.6.2",
     "react": "^16.5.0",
     "react-dom": "^16.5.0",
+    "rimraf": "^2.6.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.0",
     "webpack": "^4.18.0",
