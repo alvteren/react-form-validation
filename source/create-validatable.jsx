@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import { Consumer } from './context';
 
 export default validator => WrappedComponent => {
-  class Validatable extends Component {
+  class Validatable extends PureComponent {
     static displayName = `Validatable(${WrappedComponent.displayName || WrappedComponent.name})`;
 
     static propTypes = {
@@ -14,13 +14,24 @@ export default validator => WrappedComponent => {
     };
 
     state = {
-      isTouched: false
+      isTouched: false,
+      isBlured: false
     };
+
+    constructor(props) {
+      super(props);
+
+      const { name, validate } = props;
+      if (validate) {
+        this.validator = validator(name, validate);
+      }
+    }
 
     componentDidMount() {
       if (this.props.validate) {
-        const { context, name, value, validate } = this.props;
-        context.createInput({ name, value, validate });
+        const { context, name, value } = this.props;
+        const validator = this.validator;
+        context.createInput({ name, value, validator });
       }
     }
 
@@ -42,12 +53,15 @@ export default validator => WrappedComponent => {
 
     onBlur = event => {
       const { isTouched } = this.state;
-      const { context, onBlur, validate } = this.props;
+      const { name, context, onBlur, validate } = this.props;
       if (onBlur) {
         onBlur(event);
       }
       if (isTouched && validate) {
-        this.validate().then(result => context.onValidate(result));
+        if (!this.state.isBlured) {
+          this.setState({ isBlured: true });
+        }
+        context.onBlur(name);
       }
     };
 
@@ -57,32 +71,24 @@ export default validator => WrappedComponent => {
         onChange(event);
       }
       if (validate) {
-        context.onChange(event);
         if (!this.state.isTouched) {
           this.setState({ isTouched: true });
         }
+        context.onChange(event, this.state.isBlured);
       }
     };
 
     validate = () => {
-      const { isTouched } = this.state;
-      const { context, name, value, validate } = this.props;
-
-      return new Promise(resolve => {
-        if (validate) {
-          if (!isTouched) {
-            this.setState({ isTouched: true });
-          }
-          validator(name, validate, value, context.values).then(error => resolve(error));
-        } else {
-          resolve({ name, error: null });
-        }
-      });
+      const { context, value } = this.props;
+      return this.validator(value, context.values);
     };
 
     render() {
       // eslint-disable-next-line
       const { context, validate, ...props } = this.props;
+      if (this.props.name === 'name') {
+        console.log('Render', this.props.name);
+      }
 
       return <WrappedComponent {...props} onChange={this.onChange} onBlur={this.onBlur} />;
     }
@@ -91,6 +97,7 @@ export default validator => WrappedComponent => {
   const WithContext = props => (
     <Consumer>{context => <Validatable context={context} {...props} />}</Consumer>
   );
+
   WithContext.displayName = `WithContext(Validatable(${WrappedComponent.displayName ||
     WrappedComponent.name}))`;
 

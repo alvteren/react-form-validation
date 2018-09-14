@@ -1,6 +1,20 @@
 # react-form-validation
 Yet another form validation library for React ಠ_ಠ
 
+[DEMO](https://feerzlay.github.io/react-form-validation/)
+
+## Installation
+
+### npm
+```bash
+npm install feerzlay/react-form-validation --save
+```
+
+### yarn
+```bash
+yarn add feerzlay/react-form-validation
+```
+
 ## Usage
 
 Define your rules and create validator:
@@ -39,7 +53,7 @@ const Input = Validatable(props => <input {...props} />);
 Create Form component:
 ```javascript
 import { createForm } from 'react-form-validation';
-const Form = createForm(validator);
+const Form = createForm();
 ```
 
 Now you have everything you need:
@@ -97,3 +111,7 @@ class Page extends React.Component {
   }
 }
 ```
+
+## License
+
+[MIT](LICENSE)
