@@ -1,4 +1,4 @@
-import { createValidator } from 're-validate';
+import { createValidator } from 'react-form-validation';
 
 const rules = {
   required: (name, value, values, checkbox) => {

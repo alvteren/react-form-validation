@@ -35,7 +35,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      're-validate': path.resolve(__dirname, '../source')
+      'react-form-validation': path.resolve(__dirname, '../source')
     }
   },
   plugins: [new webpack.NoEmitOnErrorsPlugin()]

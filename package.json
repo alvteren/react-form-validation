@@ -1,5 +1,5 @@
 {
-  "name": "@feerzlay/re-validate",
+  "name": "@feerzlay/react-form-validation",
   "version": "0.1.0",
   "description": "Yet another form validation library for React ಠ_ಠ",
   "main": "build/index.js",
@@ -12,19 +12,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/feerzlay/re-validate.git"
+    "url": "git+https://github.com/feerzlay/react-form-validation.git"
   },
   "keywords": [
     "react",
     "form",
-    "validation"
+    "validation",
+    "validator"
   ],
   "author": "Denis Yakshov",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/feerzlay/re-validate/issues"
+    "url": "https://github.com/feerzlay/react-form-validation/issues"
   },
-  "homepage": "https://github.com/feerzlay/re-validate#readme",
+  "homepage": "https://github.com/feerzlay/react-form-validation#readme",
   "lint-staged": {
     "*.{js,jsx}": [
       "prettier --write",

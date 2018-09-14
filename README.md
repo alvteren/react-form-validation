@@ -1,11 +1,11 @@
-# re-validate
+# react-form-validation
 Yet another form validation library for React ಠ_ಠ
 
 ## Usage
 
 Define your rules and create validator:
 ```javascript
-import { createValidator } from 're-validate';
+import { createValidator } from 'react-form-validation';
 
 const rules = {
   required: (name, value, values, checkbox) => {
@@ -27,7 +27,7 @@ const validator = createValidator(rules);
 
 Create Validatable HOC:
 ```javascript
-import { createValidatable } from 're-validate';
+import { createValidatable } from 'react-form-validation';
 const Validatable = createValidatable(validator);
 ```
 
@@ -38,7 +38,7 @@ const Input = Validatable(props => <input {...props} />);
 
 Create Form component:
 ```javascript
-import { createForm } from 're-validate';
+import { createForm } from 'react-form-validation';
 const Form = createForm(validator);
 ```
 
