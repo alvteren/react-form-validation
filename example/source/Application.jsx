@@ -16,6 +16,8 @@ export default class Application extends Component {
     password: '',
     confirm: '',
     accept: false,
+    showEmail: false,
+    email: '',
     errors: {}
   };
 
@@ -38,7 +40,7 @@ export default class Application extends Component {
   };
 
   render() {
-    const { name, password, confirm, accept, errors } = this.state;
+    const { name, password, confirm, accept, showEmail, email, errors } = this.state;
 
     return (
       <Paper className="application">
@@ -88,6 +90,24 @@ export default class Application extends Component {
             validate="required:true"
             invalid={!!errors.accept}
           />
+          <Checkbox
+            name="showEmail"
+            label="Add E-Mail address"
+            value={showEmail}
+            onChange={this.onChange}
+          />
+          {showEmail && (
+            <TextField
+              name="email"
+              label="E-Mail"
+              value={email}
+              onChange={this.onChange}
+              validate="required|email"
+              error={errors.email}
+              margin="dense"
+              fullWidth
+            />
+          )}
           <Button
             className="application__submit"
             type="submit"

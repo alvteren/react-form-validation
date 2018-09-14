@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Provider } from './context';
 import parseEvent from './parse-event';
 
 export default validator =>
   class Form extends Component {
     static propTypes = {
-      children: PropTypes.any,
+      children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
       onErrorsChange: PropTypes.func,
       onSubmit: PropTypes.func.isRequired
     };
 
     static defaultProps = {
-      onErrorsChange: () => {}
+      onErrorsChange: function() {}
     };
 
     state = {
@@ -34,7 +35,7 @@ export default validator =>
       );
     };
 
-    onValidatorChange = event => {
+    onChange = event => {
       const { name, value } = parseEvent(event);
       this.setState(prevState => ({
         values: {
@@ -44,7 +45,7 @@ export default validator =>
       }));
     };
 
-    onValidatorMount = ({ name, value, validate }) => {
+    createInput = ({ name, value, validate }) => {
       this.setState(prevState => ({
         values: {
           ...prevState.values,
@@ -61,7 +62,7 @@ export default validator =>
       }));
     };
 
-    onValidatorUnmount = name => {
+    deleteInput = name => {
       this.setState(prevState => {
         const { ...values } = prevState.values;
         const { ...errors } = prevState.errors;
@@ -71,7 +72,7 @@ export default validator =>
         delete errors[name];
         delete validations[name];
 
-        return { values, errors };
+        return { values, errors, validations };
       });
     };
 
@@ -96,23 +97,13 @@ export default validator =>
       });
     };
 
-    renderChildren = children => {
-      const elements = Array.isArray(children) ? children : [children];
-      return React.Children.map(elements, element => {
-        if (element && element.props && element.props.validate) {
-          return React.cloneElement(element, {
-            _onValidate: this.onValidate,
-            _onValidatorChange: this.onValidatorChange,
-            _onValidatorMount: this.onValidatorMount,
-            _onValidatorUnmount: this.onValidatorUnmount,
-            _values: this.state.values
-          });
-        } else if (element && element.props && element.props.children) {
-          return React.cloneElement(element, {}, this.renderChildren(element.props.children));
-        }
-        return element;
-      });
-    };
+    getContextValue = () => ({
+      createInput: this.createInput,
+      deleteInput: this.deleteInput,
+      onChange: this.onChange,
+      onValidate: this.onValidate,
+      values: this.state.values
+    });
 
     render() {
       //eslint-disable-next-line
@@ -120,7 +111,7 @@ export default validator =>
 
       return (
         <form onSubmit={this.onSubmit} {...props}>
-          {this.renderChildren(children)}
+          <Provider value={this.getContextValue()}>{children}</Provider>
         </form>
       );
     }

@@ -9,7 +9,7 @@ import { createValidator } from 'react-form-validation';
 
 const rules = {
   required: (name, value, values, checkbox) => {
-    if (checkbox ? !value : !`${value}`.length) {
+    if (checkbox ? !value : !value.length) {
       return 'Can\'t be empty';
     }
     return null;
@@ -44,7 +44,7 @@ const Form = createForm(validator);
 
 Now you have everything you need:
 ```javascript
-export default class Page extends React.Component {
+class Page extends React.Component {
   state = {
     name: '',
     password: '',

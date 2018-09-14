@@ -18,6 +18,12 @@ const rules = {
       return 'Passwords must match';
     }
     return null;
+  },
+  email: (name, value) => {
+    if (!/^.+@.+\..+$/.test(value)) {
+      return 'Invalid E-Mail address';
+    }
+    return null;
   }
 };
 
