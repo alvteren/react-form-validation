@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+- Add onChange validation
+- Improve perfomance
 - Publish on GitHub Pages
 
 ## [0.2.1] - 2018-09-14

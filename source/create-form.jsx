@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Provider } from './context';
 import parseEvent from './parse-event';
 
-export default validator =>
+export default () =>
   class Form extends Component {
     static propTypes = {
       children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
@@ -15,73 +15,57 @@ export default validator =>
       onErrorsChange: function() {}
     };
 
-    state = {
-      values: {},
-      errors: {},
-      validations: {}
-    };
+    values = {};
+    errors = {};
+    validators = {};
+
+    constructor(props) {
+      super(props);
+      this.contextValue = {
+        createInput: this.createInput,
+        deleteInput: this.deleteInput,
+        onChange: this.onChange,
+        onBlur: this.onBlur,
+        onValidate: this.onValidate
+      };
+    }
 
     onValidate = ({ name, error }) => {
-      this.setState(
-        prevState => ({
-          errors: {
-            ...prevState.errors,
-            [name]: error
-          }
-        }),
-        () => {
-          this.props.onErrorsChange(this.state.errors);
-        }
-      );
+      this.errors[name] = error;
+      this.props.onErrorsChange(this.errors);
     };
 
-    onChange = event => {
+    onBlur = name => {
+      const { values } = this;
+      this.validators[name](values[name], values).then(this.onValidate);
+    };
+
+    onChange = (event, isBlured) => {
       const { name, value } = parseEvent(event);
-      this.setState(prevState => ({
-        values: {
-          ...prevState.values,
-          [name]: value
-        }
-      }));
+      this.values[name] = value;
+      if (isBlured) {
+        this.validators[name](value, this.values).then(this.onValidate);
+      }
     };
 
-    createInput = ({ name, value, validate }) => {
-      this.setState(prevState => ({
-        values: {
-          ...prevState.values,
-          [name]: value
-        },
-        errors: {
-          ...prevState.errors,
-          [name]: null
-        },
-        validations: {
-          ...prevState.validations,
-          [name]: validate
-        }
-      }));
+    createInput = ({ name, value, validator }) => {
+      this.values[name] = value;
+      this.errors[name] = null;
+      this.validators[name] = validator;
     };
 
     deleteInput = name => {
-      this.setState(prevState => {
-        const { ...values } = prevState.values;
-        const { ...errors } = prevState.errors;
-        const { ...validations } = prevState.validations;
-
-        delete values[name];
-        delete errors[name];
-        delete validations[name];
-
-        return { values, errors, validations };
-      });
+      delete this.values[name];
+      delete this.errors[name];
+      delete this.validators[name];
     };
 
     onSubmit = event => {
       event.preventDefault();
-      const { values, validations } = this.state;
+      const { values } = this;
       const promises = [];
       Object.keys(values).forEach(name => {
-        promises.push(validator(name, validations[name], values[name], values));
+        promises.push(this.validators[name](values[name], values));
       });
       Promise.all(promises).then(results => {
         const errors = {};
@@ -97,21 +81,13 @@ export default validator =>
       });
     };
 
-    getContextValue = () => ({
-      createInput: this.createInput,
-      deleteInput: this.deleteInput,
-      onChange: this.onChange,
-      onValidate: this.onValidate,
-      values: this.state.values
-    });
-
     render() {
       //eslint-disable-next-line
       const { children, onErrorsChange, onSubmit, ...props } = this.props;
 
       return (
         <form onSubmit={this.onSubmit} {...props}>
-          <Provider value={this.getContextValue()}>{children}</Provider>
+          <Provider value={this.contextValue}>{children}</Provider>
         </form>
       );
     }

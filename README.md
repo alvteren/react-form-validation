@@ -53,7 +53,7 @@ const Input = Validatable(props => <input {...props} />);
 Create Form component:
 ```javascript
 import { createForm } from 'react-form-validation';
-const Form = createForm(validator);
+const Form = createForm();
 ```
 
 Now you have everything you need:
