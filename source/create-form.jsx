@@ -15,6 +15,7 @@ export default () =>
       onErrorsChange: function() {}
     };
 
+    inputs = {};
     values = {};
     errors = {};
     validators = {};
@@ -25,8 +26,7 @@ export default () =>
         createInput: this.createInput,
         deleteInput: this.deleteInput,
         onChange: this.onChange,
-        onBlur: this.onBlur,
-        onValidate: this.onValidate
+        onBlur: this.onBlur
       };
     }
 
@@ -48,16 +48,19 @@ export default () =>
       }
     };
 
-    createInput = ({ name, value, validator }) => {
+    createInput = input => {
+      const { name, value, validator } = input;
       this.values[name] = value;
       this.errors[name] = null;
       this.validators[name] = validator;
+      this.inputs[name] = input;
     };
 
     deleteInput = name => {
       delete this.values[name];
       delete this.errors[name];
       delete this.validators[name];
+      delete this.input[name];
     };
 
     onSubmit = event => {
@@ -66,13 +69,14 @@ export default () =>
       const promises = [];
       Object.keys(values).forEach(name => {
         promises.push(this.validators[name](values[name], values));
+        this.inputs[name].touch();
       });
       Promise.all(promises).then(results => {
         const errors = {};
         results.forEach(result => {
           errors[result.name] = result.error;
         });
-        this.setState({ errors });
+        this.errors = errors;
         this.props.onErrorsChange(errors);
 
         if (results.every(result => !result.error)) {

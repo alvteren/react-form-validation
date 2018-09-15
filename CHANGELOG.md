@@ -1,6 +1,11 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.3.1] - 2018-09-15
+- Fix onSubmit validation
+
+## [0.3.0] - 2018-09-14
 - Add onChange validation
 - Improve perfomance
 - Publish on GitHub Pages

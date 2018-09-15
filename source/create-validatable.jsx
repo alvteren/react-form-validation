@@ -31,7 +31,12 @@ export default validator => WrappedComponent => {
       if (this.props.validate) {
         const { context, name, value } = this.props;
         const validator = this.validator;
-        context.createInput({ name, value, validator });
+        context.createInput({
+          name,
+          value,
+          validator,
+          touch: () => this.setState({ isTouched: true, isBlured: true })
+        });
       }
     }
 
@@ -78,17 +83,9 @@ export default validator => WrappedComponent => {
       }
     };
 
-    validate = () => {
-      const { context, value } = this.props;
-      return this.validator(value, context.values);
-    };
-
     render() {
       // eslint-disable-next-line
       const { context, validate, ...props } = this.props;
-      if (this.props.name === 'name') {
-        console.log('Render', this.props.name);
-      }
 
       return <WrappedComponent {...props} onChange={this.onChange} onBlur={this.onBlur} />;
     }

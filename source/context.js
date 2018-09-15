@@ -6,6 +6,5 @@ export const { Provider, Consumer } = React.createContext({
   createInput: mock,
   deleteInput: mock,
   onChange: mock,
-  onBlur: mock,
-  onValidate: mock
+  onBlur: mock
 });
