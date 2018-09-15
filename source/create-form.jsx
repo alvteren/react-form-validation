@@ -57,12 +57,10 @@ export default () =>
     };
 
     deleteInput = name => {
-      if (this && this.values) {
-        delete this.values[name];
-        delete this.errors[name];
-        delete this.validators[name];
-        delete this.input[name];
-      }
+      delete this.values[name];
+      delete this.errors[name];
+      delete this.validators[name];
+      delete this.inputs[name];
     };
 
     onSubmit = event => {
