@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Fix form unmounting
 
 ## [0.3.1] - 2018-09-15
 - Fix onSubmit validation
