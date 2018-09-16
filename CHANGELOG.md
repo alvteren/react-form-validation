@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Use comma to separate multiple rule agruments
 - Add addError and removeError public methods
 - Use webpack to build package
 - Fix imports in usage and example

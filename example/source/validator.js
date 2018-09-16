@@ -13,6 +13,12 @@ const rules = {
     }
     return null;
   },
+  between: (name, value, values, min, max) => {
+    if (value.length < min || value.length > max) {
+      return `Must be ${min}-${max} characters long`;
+    }
+    return null;
+  },
   confirms: (name, value, values, target) => {
     if (value !== values[target]) {
       return 'Passwords must match';

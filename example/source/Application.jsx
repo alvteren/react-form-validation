@@ -68,7 +68,7 @@ export default class Application extends Component {
             label="Username"
             value={username}
             onChange={this.onChange}
-            validate="required"
+            validate="required|between:6,20"
             error={errors.username}
             margin="normal"
             fullWidth
