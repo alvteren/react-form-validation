@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Add validation event config
 - Use comma to separate multiple rule agruments
 - Add addError and removeError public methods
 - Use webpack to build package

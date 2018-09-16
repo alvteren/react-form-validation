@@ -1,3 +1,5 @@
 import { createForm } from '@feerzlay/react-form-validation';
 
-export default createForm();
+export default createForm({
+  event: 'onChange'
+});
