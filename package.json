@@ -1,6 +1,6 @@
 {
   "name": "@feerzlay/react-form-validation",
-  "version": "0.3.3",
+  "version": "0.4.0",
   "description": "Yet another form validation library for React ಠ_ಠ",
   "main": "out/index.js",
   "scripts": {
