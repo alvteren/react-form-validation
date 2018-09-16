@@ -38,7 +38,7 @@ module.exports = {
   resolve: {
     extensions: ['.js', '.jsx'],
     alias: {
-      'react-form-validation': path.resolve(__dirname, '../source')
+      '@feerzlay/react-form-validation': path.resolve(__dirname, '../source')
     }
   },
   plugins: [

@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Fix imports in usage and example
 
 ## [0.3.3] - 2018-09-15
 - Really fix form unmounting

@@ -19,7 +19,7 @@ yarn add feerzlay/react-form-validation
 
 Define your rules and create validator:
 ```javascript
-import { createValidator } from 'react-form-validation';
+import { createValidator } from '@feerzlay/react-form-validation';
 
 const rules = {
   required: (name, value, values, checkbox) => {
@@ -41,7 +41,7 @@ const validator = createValidator(rules);
 
 Create Validatable HOC:
 ```javascript
-import { createValidatable } from 'react-form-validation';
+import { createValidatable } from '@feerzlay/react-form-validation';
 const Validatable = createValidatable(validator);
 ```
 
@@ -52,7 +52,7 @@ const Input = Validatable(props => <input {...props} />);
 
 Create Form component:
 ```javascript
-import { createForm } from 'react-form-validation';
+import { createForm } from '@feerzlay/react-form-validation';
 const Form = createForm();
 ```
 
