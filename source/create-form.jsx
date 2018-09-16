@@ -30,21 +30,26 @@ export default () =>
       };
     }
 
-    onValidate = ({ name, error }) => {
+    addError = ({ name, error }) => {
       this.errors[name] = error;
+      this.props.onErrorsChange(this.errors);
+    };
+
+    removeError = name => {
+      this.errors[name] = null;
       this.props.onErrorsChange(this.errors);
     };
 
     onBlur = name => {
       const { values } = this;
-      this.validators[name](values[name], values).then(this.onValidate);
+      this.validators[name](values[name], values).then(this.addError);
     };
 
     onChange = (event, isBlured) => {
       const { name, value } = parseEvent(event);
       this.values[name] = value;
       if (isBlured) {
-        this.validators[name](value, this.values).then(this.onValidate);
+        this.validators[name](value, this.values).then(this.addError);
       }
     };
 

@@ -121,6 +121,8 @@ class Page extends React.Component {
 }
 ```
 
+For more details see [example](https://github.com/feerzlay/react-form-validation/tree/master/example).
+
 ## License
 
 [MIT](LICENSE)
