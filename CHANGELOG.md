@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Reduce bundle size
 
 ## [0.4.0] - 2018-09-16
 - Add validation event config
