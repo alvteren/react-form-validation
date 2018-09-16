@@ -6,5 +6,6 @@ source/
 .gitignore
 .prettierignore
 .prettierrc
+.travis.yml
 jsconfig.json
 yarn.lock
