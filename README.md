@@ -6,6 +6,7 @@
 ![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/feerzlay/react-form-validation.svg)
 ![Percentage of issues still open](http://isitmaintained.com/badge/open/feerzlay/react-form-validation.svg)
 ![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![Build Status](https://travis-ci.org/feerzlay/react-form-validation.svg?branch=develop)](https://travis-ci.org/feerzlay/react-form-validation)
 
 Yet another form validation library for React ಠ_ಠ
 
