@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Use webpack to build package
 - Fix imports in usage and example
 
 ## [0.3.3] - 2018-09-15
