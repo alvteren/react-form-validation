@@ -1,4 +1,4 @@
-import { createValidator } from 'react-form-validation';
+import { createValidator } from '@feerzlay/react-form-validation';
 
 const rules = {
   required: (name, value, values, checkbox) => {
@@ -10,6 +10,12 @@ const rules = {
   min: (name, value, values, min) => {
     if (value.length < min) {
       return `Must be at least ${min} characters long`;
+    }
+    return null;
+  },
+  between: (name, value, values, min, max) => {
+    if (value.length < min || value.length > max) {
+      return `Must be ${min}-${max} characters long`;
     }
     return null;
   },

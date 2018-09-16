@@ -1,4 +1,13 @@
 # react-form-validation
+
+
+![npm](https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg)
+![npm](https://img.shields.io/npm/dm/@feerzlay/react-form-validation.svg)
+![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/feerzlay/react-form-validation.svg)
+![Percentage of issues still open](http://isitmaintained.com/badge/open/feerzlay/react-form-validation.svg)
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+[![Build Status](https://travis-ci.org/feerzlay/react-form-validation.svg?branch=develop)](https://travis-ci.org/feerzlay/react-form-validation)
+
 Yet another form validation library for React ಠ_ಠ
 
 [DEMO](https://feerzlay.github.io/react-form-validation/)
@@ -19,7 +28,7 @@ yarn add feerzlay/react-form-validation
 
 Define your rules and create validator:
 ```javascript
-import { createValidator } from 'react-form-validation';
+import { createValidator } from '@feerzlay/react-form-validation';
 
 const rules = {
   required: (name, value, values, checkbox) => {
@@ -41,7 +50,7 @@ const validator = createValidator(rules);
 
 Create Validatable HOC:
 ```javascript
-import { createValidatable } from 'react-form-validation';
+import { createValidatable } from '@feerzlay/react-form-validation';
 const Validatable = createValidatable(validator);
 ```
 
@@ -52,7 +61,7 @@ const Input = Validatable(props => <input {...props} />);
 
 Create Form component:
 ```javascript
-import { createForm } from 'react-form-validation';
+import { createForm } from '@feerzlay/react-form-validation';
 const Form = createForm();
 ```
 
@@ -111,6 +120,8 @@ class Page extends React.Component {
   }
 }
 ```
+
+For more details see [example](https://github.com/feerzlay/react-form-validation/tree/master/example).
 
 ## License
 

@@ -3,8 +3,26 @@ import PropTypes from 'prop-types';
 import { Provider } from './context';
 import parseEvent from './parse-event';
 
-export default () =>
-  class Form extends Component {
+function getEventLevel(event) {
+  switch (event) {
+    case 'onBlur':
+      return 1;
+    case 'onChange':
+      return 2;
+    default:
+      return 0;
+  }
+}
+
+export default (options = {}) => {
+  options = {
+    event: 'onChange',
+    ...options
+  };
+
+  const eventLevel = getEventLevel(options.event);
+
+  return class Form extends Component {
     static propTypes = {
       children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
       onErrorsChange: PropTypes.func,
@@ -30,21 +48,28 @@ export default () =>
       };
     }
 
-    onValidate = ({ name, error }) => {
+    addError = ({ name, error }) => {
       this.errors[name] = error;
+      this.props.onErrorsChange(this.errors);
+    };
+
+    removeError = name => {
+      this.errors[name] = null;
       this.props.onErrorsChange(this.errors);
     };
 
     onBlur = name => {
       const { values } = this;
-      this.validators[name](values[name], values).then(this.onValidate);
+      if (eventLevel > 0) {
+        this.validators[name](values[name], values).then(this.addError);
+      }
     };
 
     onChange = (event, isBlured) => {
       const { name, value } = parseEvent(event);
       this.values[name] = value;
-      if (isBlured) {
-        this.validators[name](value, this.values).then(this.onValidate);
+      if (eventLevel > 1 && isBlured) {
+        this.validators[name](value, this.values).then(this.addError);
       }
     };
 
@@ -96,3 +121,4 @@ export default () =>
       );
     }
   };
+};

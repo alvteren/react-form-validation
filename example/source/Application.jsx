@@ -12,7 +12,7 @@ import TextField from './components/UI/TextField';
 
 export default class Application extends Component {
   state = {
-    name: '',
+    username: '',
     password: '',
     confirm: '',
     accept: false,
@@ -39,22 +39,37 @@ export default class Application extends Component {
     console.log('OK');
   };
 
+  addError = () => {
+    this.validator.addError({
+      name: 'username',
+      error: 'This username is already in use'
+    });
+  };
+
+  removeError = () => {
+    this.validator.removeError('username');
+  };
+
   render() {
-    const { name, password, confirm, accept, showEmail, email, errors } = this.state;
+    const { username, password, confirm, accept, showEmail, email, errors } = this.state;
 
     return (
       <Paper className="application">
         <Typography variant="headline" align="center">
           Sign In
         </Typography>
-        <Form onSubmit={this.onSubmit} onErrorsChange={this.onErrorsChange}>
+        <Form
+          onSubmit={this.onSubmit}
+          onErrorsChange={this.onErrorsChange}
+          ref={validator => (this.validator = validator)}
+        >
           <TextField
-            name="name"
-            label="Name"
-            value={name}
+            name="username"
+            label="Username"
+            value={username}
             onChange={this.onChange}
-            validate="required"
-            error={errors.name}
+            validate="required|between:6,20"
+            error={errors.username}
             margin="normal"
             fullWidth
           />
@@ -116,6 +131,18 @@ export default class Application extends Component {
             fullWidth
           >
             Submit
+          </Button>
+          <Button
+            className="application__submit"
+            type="button"
+            color="secondary"
+            onClick={this.addError}
+            fullWidth
+          >
+            Add error to username
+          </Button>
+          <Button type="button" color="secondary" onClick={this.removeError} fullWidth>
+            Remove error from username
           </Button>
         </Form>
       </Paper>

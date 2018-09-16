@@ -1,14 +1,14 @@
 export default rules => (name, validations) => {
   const funcs = [];
   for (const validation of validations.split('|')) {
-    const [rule, ...args] = validation.split(':');
-    funcs.push([rules[rule], args]);
+    const [rule, args] = validation.split(':');
+    funcs.push([rules[rule], args ? args.split(',') : []]);
   }
 
   return (value, values) => {
     const promises = [];
     for (const [rule, args] of funcs) {
-      promises.push(rule(name, value, values, args));
+      promises.push(rule(name, value, values, ...args));
     }
     return Promise.all(promises)
       .then(results => {

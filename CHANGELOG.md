@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+## [0.4.0] - 2018-09-16
+- Add validation event config
+- Use comma to separate multiple rule agruments
+- Add addError and removeError public methods
+- Use webpack to build package
+- Fix imports in usage and example
+
 ## [0.3.3] - 2018-09-15
 - Really fix form unmounting
 
