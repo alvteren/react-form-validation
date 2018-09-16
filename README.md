@@ -1,4 +1,12 @@
 # react-form-validation
+
+
+![npm](https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg)
+![npm](https://img.shields.io/npm/dm/@feerzlay/react-form-validation.svg)
+![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/feerzlay/react-form-validation.svg)
+![Percentage of issues still open](http://isitmaintained.com/badge/open/feerzlay/react-form-validation.svg)
+![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
+
 Yet another form validation library for React ಠ_ಠ
 
 [DEMO](https://feerzlay.github.io/react-form-validation/)
