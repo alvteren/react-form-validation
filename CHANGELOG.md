@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Remove isRequired from input value
 - Reduce bundle size
 
 ## [0.4.0] - 2018-09-16
