@@ -7,7 +7,6 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 
 module.exports = {
   mode: 'production',
-  devtool: 'cheap-eval-source-map',
   entry: './source/index.js',
   output: {
     filename: 'index.js',
@@ -35,6 +34,11 @@ module.exports = {
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: JSON.stringify('production')
+      }
+    }),
     new BundleAnalyzerPlugin({
       analyzerMode: +process.env.OPEN_BUNDLE_ANALYZER ? 'server' : 'disabled'
     })

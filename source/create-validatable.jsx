@@ -10,7 +10,7 @@ export default validator => WrappedComponent => {
       context: PropTypes.object,
       name: PropTypes.string,
       validate: PropTypes.string,
-      value: PropTypes.any.isRequired
+      value: PropTypes.any
     };
 
     state = {
