@@ -4,6 +4,7 @@
   <img src="https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg" alt="Version" />
   <img src="https://img.shields.io/npm/dm/@feerzlay/react-form-validation.svg" alt="Downloads" />
   <img src="https://travis-ci.org/feerzlay/react-form-validation.svg?branch=develop" alt="Build Status" />
+  <img src="https://img.shields.io/bundlephobia/minzip/@feerzlay/react-form-validation.svg" alt="Bundle size (minified + gzip)" />
   <img src="http://isitmaintained.com/badge/resolution/feerzlay/react-form-validation.svg" alt="Average time to resolve an issue" />
   <img src="http://isitmaintained.com/badge/open/feerzlay/react-form-validation.svg" alt="Percentage of issues still open" />
   <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="License" />
