@@ -1,6 +1,7 @@
 example/
 source/
 .babelrc
+.env.example
 .eslintignore
 .eslintrc
 .gitignore
@@ -8,4 +9,6 @@ source/
 .prettierrc
 .travis.yml
 jsconfig.json
+logo.png
+webpack.config.js
 yarn.lock

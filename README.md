@@ -1,4 +1,4 @@
-<h1 align="center"> react-form-validation </h1>
+![React Form Validation](logo.png?raw=true "React Form Validation")
 
 <div align="center">
   <img src="https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg" alt="Version" />
@@ -22,7 +22,7 @@
 - [License](#license)
 
 ## Features
-- Simple usage by using higher-order component.
+- Simple usage with help of higher-order component.
 - You define your own validation rules.
 - Support for both synchronous and asynchronous validations.
 - Automatically validates every input inside a form. Even the ones nested into another component.
