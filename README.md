@@ -1,16 +1,33 @@
-# react-form-validation
+![React Form Validation](logo.png?raw=true "React Form Validation")
 
+<div align="center">
+  <img src="https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg" alt="Version" />
+  <img src="https://img.shields.io/npm/dm/@feerzlay/react-form-validation.svg" alt="Downloads" />
+  <img src="https://travis-ci.org/feerzlay/react-form-validation.svg?branch=develop" alt="Build Status" />
+  <img src="https://img.shields.io/bundlephobia/minzip/@feerzlay/react-form-validation.svg" alt="Bundle size (minified + gzip)" />
+  <img src="http://isitmaintained.com/badge/resolution/feerzlay/react-form-validation.svg" alt="Average time to resolve an issue" />
+  <img src="http://isitmaintained.com/badge/open/feerzlay/react-form-validation.svg" alt="Percentage of issues still open" />
+  <img src="https://img.shields.io/github/license/mashape/apistatus.svg" alt="License" />
+</div>
 
-![npm](https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg)
-![npm](https://img.shields.io/npm/dm/@feerzlay/react-form-validation.svg)
-![Average time to resolve an issue](http://isitmaintained.com/badge/resolution/feerzlay/react-form-validation.svg)
-![Percentage of issues still open](http://isitmaintained.com/badge/open/feerzlay/react-form-validation.svg)
-![GitHub](https://img.shields.io/github/license/mashape/apistatus.svg)
-[![Build Status](https://travis-ci.org/feerzlay/react-form-validation.svg?branch=develop)](https://travis-ci.org/feerzlay/react-form-validation)
+<h3 align="center">
+  <a href="https://feerzlay.github.io/react-form-validation/"> Demo </a>
+  <span> | </span>
+  <a href="https://github.com/feerzlay/react-form-validation/tree/master/example"> Example </a>
+</h3>
 
-Yet another form validation library for React ಠ_ಠ
+## Table of Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Usage](#usage)
+- [License](#license)
 
-[DEMO](https://feerzlay.github.io/react-form-validation/)
+## Features
+- Simple usage with help of higher-order component.
+- You define your own validation rules.
+- Support for both synchronous and asynchronous validations.
+- Automatically validates every input inside a form. Even the ones nested into another component.
+- Easy integration with UI frameworks.
 
 ## Installation
 
@@ -26,103 +43,84 @@ yarn add feerzlay/react-form-validation
 
 ## Usage
 
-Define your rules and create validator:
-```javascript
-import { createValidator } from '@feerzlay/react-form-validation';
+### Create a validator
+This library does not contain any built-in validation rules. So before creating a validator you need to define you own rules. A rule is a function of following signature - `(name, value, values, ..args)`. This function should return `null` on validation pass, and error message on validation fail. You can also return a `Promise` which resolves to `null` or `String`.
 
+So, you can define your rules like this:
+```javascript
 const rules = {
-  required: (name, value, values, checkbox) => {
-    if (checkbox ? !value : !value.length) {
-      return 'Can\'t be empty';
-    }
-    return null;
+  required: (name, value) => {
+    if (value.length > 0) return null;
+    return '${name} can\'t be empty';
   },
   min: (name, value, values, min) => {
-    if (value.length < min) {
-      return `Must be at least ${min} characters long`;
-    }
-    return null;
+    if (value.length >= min) return null;
+    return `${name} must be at least ${min} characters long`;
   }
 };
+```
+Note that `values` agrument contains values of every validatable input inside a form. You can use it to define rules like a password confirmation.
 
+Now you can import a validator creator and pass previously defined rules as an agrument:
+```javascript
+import { createValidator } from '@feerzlay/react-form-validation';
 const validator = createValidator(rules);
 ```
 
-Create Validatable HOC:
+### Create a higher-order component
+This step is pretty simple. Just import a HOC creator and previously created validator as an agrument.
 ```javascript
 import { createValidatable } from '@feerzlay/react-form-validation';
 const Validatable = createValidatable(validator);
 ```
 
-Wrap your inputs with Validatable HOC. Note that input should make use of `name`, `value`, `onChange`, `onBlur` props.
+### Wrap your inputs
+Wrap your inputs with created higher-order component.
 ```javascript
-const Input = Validatable(props => <input {...props} />);
+const BasicInput = props => <input {...props} />;
+const Input = Validatable(BasicInput);
 ```
+Take a note that HOC expects input to recieve `name` and `value` props and emit `onChange` and `onBlur` values.
 
-Create Form component:
+### Create a `Form` component
+For a basic usage you only need to import a form creator function and call it.
 ```javascript
 import { createForm } from '@feerzlay/react-form-validation';
 const Form = createForm();
 ```
-
-Now you have everything you need:
+This function also accepts an object of options. For now this object have only one entry:
 ```javascript
-class Page extends React.Component {
-  state = {
-    name: '',
-    password: '',
-    errors: {}
-  };
-
-  onChange = event => {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
-    this.setState({
-      [name]: value
-    });
-  };
-
-  onErrorsChange = errors => {
-    this.setState({ errors });
-  };
-
-  onSubmit = () => {
-    console.log('No validation errors');
-  };
-
-  render() {
-    const { name, password, errors } = this.state;
-
-    return (
-      <Form onSubmit={this.onSubmit} onErrorsChange={this.onErrorsChange}>
-        <Input
-          name="name"
-          value={name}
-          onChange={this.onChange}
-          validate="required"
-        />
-        <div> {errors.name} </div>
-        <div>
-          { /* Inputs can be nested into another elements */ }
-          <Input
-            type="password"
-            name="password"
-            value={password}
-            onChange={this.onChange}
-            validate="required|min:8"
-          />
-          <div> {errors.password} </div>
-        </div>
-      </Form>
-    );
-  }
-}
+{ event: 'onChange' }
 ```
+You can override it to be `onBlur` or just an empty string. If `onBlur` is used, then only form submit and input blur will trigger validation. If empty string is used, then only form submit will trigger validation.
 
-For more details see [example](https://github.com/feerzlay/react-form-validation/tree/master/example).
+Created component can be used almost as a regular `<form>` tag, but with two differences:
+- `onSubmit` event triggered only on successful validation.
+- It has an additional `onErrorsChange` event, which you should use to store information about errors and display them to the user.
+
+### Done :tada:
+Now when you have form and input components you are ready to start building your forms.
+```javascript
+<Form onSubmit={...} onErrorsChange={...}>
+  <Input
+    value={...} onChange={...} name="username"
+    validate="required"
+  />
+  <Input
+    value={...} onChange={...} name="password"
+    validate="required|min:8"
+  />
+  <Input
+    value={...} onChange={...} name="optional"
+  />
+</Form>
+```
+We use `validate` prop do describe which rules must be used for input validation. Individual rules should be separated by `|`. To pass agruments use `:` and then write a list of arguments separated by `,`.
+
+You can also manually add and remove errors from inputs by calling `addError({ name, error })` and `removeError(name)` methods on a form component.
+
+See [example](https://github.com/feerzlay/react-form-validation/tree/master/example) for more usage details.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) - Denis Yakshov - 2018

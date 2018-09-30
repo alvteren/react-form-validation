@@ -49,8 +49,10 @@ export default (options = {}) => {
     }
 
     addError = ({ name, error }) => {
-      this.errors[name] = error;
-      this.props.onErrorsChange(this.errors);
+      if (this.errors[name] !== error) {
+        this.errors[name] = error;
+        this.props.onErrorsChange(this.errors);
+      }
     };
 
     removeError = name => {
