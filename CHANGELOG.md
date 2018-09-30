@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.4.2] - 2018-09-30
 - Prevent unnecessary onErrorsChange calls
 
 ## [0.4.1] - 2018-09-18
