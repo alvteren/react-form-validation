@@ -1,6 +1,6 @@
 import './Application.scss';
 
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -10,7 +10,7 @@ import Checkbox from './components/UI/Checkbox';
 import Form from './components/UI/Form';
 import TextField from './components/UI/TextField';
 
-export default class Application extends Component {
+export default class Application extends PureComponent {
   state = {
     username: '',
     password: '',
