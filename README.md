@@ -1,4 +1,4 @@
-![React Form Validation](logo.png?raw=true "React Form Validation")
+![React Form Validation](https://github.com/feerzlay/react-form-validation/blob/master/logo.png?raw=true "React Form Validation")
 
 <div align="center">
   <img src="https://img.shields.io/npm/v/@feerzlay/react-form-validation.svg" alt="Version" />

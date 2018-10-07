@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+## [0.4.3] - 2018-10-07
+- Make errors object immutable
+
 ## [0.4.2] - 2018-09-30
 - Prevent unnecessary onErrorsChange calls
 
