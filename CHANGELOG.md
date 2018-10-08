@@ -1,6 +1,7 @@
 # Changelog
 
 ## [Unreleased]
+- Fix errors resetting
 
 ## [0.4.3] - 2018-10-07
 - Make errors object immutable

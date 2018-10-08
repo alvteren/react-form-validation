@@ -50,14 +50,15 @@ export default (options = {}) => {
 
     addError = ({ name, error }) => {
       if (this.errors[name] !== error) {
-        this.errors = Object.assign({}, this.errros, { [name]: error });
-        this.props.onErrorsChange(this.errors);
+        const errors = Object.assign({}, this.errors, { [name]: error });
+        this.errors = errors;
+        this.props.onErrorsChange(errors);
       }
     };
 
     removeError = name => {
       this.errors[name] = null;
-      this.errors = Object.assign({}, this.errros);
+      this.errors = Object.assign({}, this.errors);
       this.props.onErrorsChange(this.errors);
     };
 
