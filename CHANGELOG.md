@@ -1,6 +1,8 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.4.4] - 2018-10-08
 - Fix errors resetting
 
 ## [0.4.3] - 2018-10-07
