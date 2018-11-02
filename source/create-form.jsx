@@ -26,11 +26,13 @@ export default (options = {}) => {
     static propTypes = {
       children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
       onErrorsChange: PropTypes.func,
-      onSubmit: PropTypes.func.isRequired
+      onSubmit: PropTypes.func.isRequired,
+      onSubmitFail: PropTypes.func
     };
 
     static defaultProps = {
-      onErrorsChange: function() {}
+      onErrorsChange: function() {},
+      onSubmitFail: function() {}
     };
 
     inputs = {};
@@ -60,6 +62,31 @@ export default (options = {}) => {
       this.errors[name] = null;
       this.errors = Object.assign({}, this.errors);
       this.props.onErrorsChange(this.errors);
+    };
+
+    validateAll = () => {
+      return new Promise(resolve => {
+        const { values } = this;
+        const promises = [];
+        Object.keys(values).forEach(name => {
+          promises.push(this.validators[name](values[name], values));
+          this.inputs[name].touch();
+        });
+        Promise.all(promises).then(results => {
+          const errors = {};
+          results.forEach(result => {
+            errors[result.name] = result.error;
+          });
+          this.errors = errors;
+          this.props.onErrorsChange(errors);
+
+          if (results.every(result => !result.error)) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+      });
     };
 
     onBlur = name => {
@@ -94,29 +121,19 @@ export default (options = {}) => {
 
     onSubmit = event => {
       event.preventDefault();
-      const { values } = this;
-      const promises = [];
-      Object.keys(values).forEach(name => {
-        promises.push(this.validators[name](values[name], values));
-        this.inputs[name].touch();
-      });
-      Promise.all(promises).then(results => {
-        const errors = {};
-        results.forEach(result => {
-          errors[result.name] = result.error;
-        });
-        this.errors = errors;
-        this.props.onErrorsChange(errors);
-
-        if (results.every(result => !result.error)) {
-          this.props.onSubmit(event);
+      const { onSubmit, onSubmitFail } = this.props;
+      this.validateAll().then(result => {
+        if (result) {
+          onSubmit(event);
+        } else {
+          onSubmitFail();
         }
       });
     };
 
     render() {
       //eslint-disable-next-line
-      const { children, onErrorsChange, onSubmit, ...props } = this.props;
+      const { children, onErrorsChange, onSubmit, onSubmitFail, ...props } = this.props;
 
       return (
         <form onSubmit={this.onSubmit} {...props}>
