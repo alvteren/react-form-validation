@@ -26,11 +26,13 @@ export default (options = {}) => {
     static propTypes = {
       children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]).isRequired,
       onErrorsChange: PropTypes.func,
-      onSubmit: PropTypes.func.isRequired
+      onSubmit: PropTypes.func.isRequired,
+      onSubmitFail: PropTypes.func
     };
 
     static defaultProps = {
-      onErrorsChange: function() {}
+      onErrorsChange: function() {},
+      onSubmitFail: function() {}
     };
 
     inputs = {};
@@ -119,16 +121,19 @@ export default (options = {}) => {
 
     onSubmit = event => {
       event.preventDefault();
+      const { onSubmit, onSubmitFail } = this.props;
       this.validateAll().then(result => {
         if (result) {
-          this.props.onSubmit(event);
+          onSubmit(event);
+        } else {
+          onSubmitFail();
         }
       });
     };
 
     render() {
       //eslint-disable-next-line
-      const { children, onErrorsChange, onSubmit, ...props } = this.props;
+      const { children, onErrorsChange, onSubmit, onSubmitFail, ...props } = this.props;
 
       return (
         <form onSubmit={this.onSubmit} {...props}>

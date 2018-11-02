@@ -2,6 +2,7 @@
 
 ## [Unreleased]
 
+- Add onSubmitFail event
 - Add validateAll method
 
 ## [0.4.4] - 2018-10-08
