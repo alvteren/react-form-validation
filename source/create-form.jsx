@@ -62,6 +62,31 @@ export default (options = {}) => {
       this.props.onErrorsChange(this.errors);
     };
 
+    validateAll = () => {
+      return new Promise(resolve => {
+        const { values } = this;
+        const promises = [];
+        Object.keys(values).forEach(name => {
+          promises.push(this.validators[name](values[name], values));
+          this.inputs[name].touch();
+        });
+        Promise.all(promises).then(results => {
+          const errors = {};
+          results.forEach(result => {
+            errors[result.name] = result.error;
+          });
+          this.errors = errors;
+          this.props.onErrorsChange(errors);
+
+          if (results.every(result => !result.error)) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+        });
+      });
+    };
+
     onBlur = name => {
       const { values } = this;
       if (eventLevel > 0) {
@@ -94,21 +119,8 @@ export default (options = {}) => {
 
     onSubmit = event => {
       event.preventDefault();
-      const { values } = this;
-      const promises = [];
-      Object.keys(values).forEach(name => {
-        promises.push(this.validators[name](values[name], values));
-        this.inputs[name].touch();
-      });
-      Promise.all(promises).then(results => {
-        const errors = {};
-        results.forEach(result => {
-          errors[result.name] = result.error;
-        });
-        this.errors = errors;
-        this.props.onErrorsChange(errors);
-
-        if (results.every(result => !result.error)) {
+      this.validateAll().then(result => {
+        if (result) {
           this.props.onSubmit(event);
         }
       });
