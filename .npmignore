@@ -1,7 +1,9 @@
 .github
+.vscode
 example/
 source/
 .babelrc
+.env
 .env.example
 .eslintignore
 .eslintrc
