@@ -1,6 +1,9 @@
 # Changelog
 
 ## [Unreleased]
+
+## [0.6.0] - 2018-11-26
+
 - Add support for dynamic rules
 
 ## [0.5.0] - 2018-11-02
