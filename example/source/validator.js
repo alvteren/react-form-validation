@@ -3,13 +3,19 @@ import { createValidator } from '@feerzlay/react-form-validation';
 const rules = {
   required: (name, value, values, checkbox) => {
     if (checkbox ? !value : !value.length) {
-      return 'Can\'t be empty';
+      return "Can't be empty";
     }
     return null;
   },
   min: (name, value, values, min) => {
     if (value.length < min) {
       return `Must be at least ${min} characters long`;
+    }
+    return null;
+  },
+  max: (name, value, values, max) => {
+    if (value.length > max) {
+      return `Must be no longer than ${max} characters`;
     }
     return null;
   },

@@ -48,9 +48,25 @@ export default validator => WrappedComponent => {
     }
 
     componentDidUpdate(prevProps) {
-      if (this.props.validate) {
-        const { context, name, value } = this.props;
-        if (prevProps.value !== value) {
+      const { context, name, validate } = this.props;
+
+      if (validate !== prevProps.validate) {
+        context.deleteInput(name);
+      }
+
+      if (validate) {
+        const { value } = this.props;
+
+        if (validate !== prevProps.validate) {
+          this.validator = validator(name, this.props.validate);
+          context.createInput({
+            name,
+            value,
+            validator: this.validator,
+            touch: () => this.setState({ isTouched: true, isBlured: true })
+          });
+          context.onChange({ target: { name, value } }, this.state.isBlured);
+        } else if (prevProps.value !== value) {
           context.onChange({ target: { name, value } });
         }
       }
@@ -84,8 +100,9 @@ export default validator => WrappedComponent => {
     };
 
     render() {
-      // eslint-disable-next-line
+      /* eslint-disable no-unused-vars */
       const { context, validate, ...props } = this.props;
+      /* eslint-enable no-unused-vars */
 
       return <WrappedComponent {...props} onChange={this.onChange} onBlur={this.onBlur} />;
     }

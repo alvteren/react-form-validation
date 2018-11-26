@@ -3,11 +3,13 @@
     "browser": true,
     "commonjs": true,
     "es6": true,
-    "node": true
+    "node": true,
+    "jest": true
   },
   "extends": [
     "eslint:recommended",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "plugin:prettier/recommended"
   ],
   "parser": "babel-eslint",
   "parserOptions": {
@@ -18,7 +20,7 @@
   ],
   "settings": {
     "react": {
-      "version": "16.4.2"
+      "version": "16.6.3"
     }
   },
   "rules": {
@@ -45,13 +47,6 @@
       "that"
     ],
     "curly": "error",
-    "indent": [
-      "error",
-      2,
-      {
-        "SwitchCase": 1
-      }
-    ],
     "jsx-quotes": [
       "error",
       "prefer-double"
@@ -60,14 +55,6 @@
       "error",
       "unix"
     ],
-    "max-len": [
-      "error",
-      {
-        "code": 100,
-        "ignoreStrings": true,
-        "ignoreTemplateLiterals": true
-      }
-    ],
     "no-console": "off",
     "no-empty": [
       "error",
@@ -75,17 +62,13 @@
         "allowEmptyCatch": true
       }
     ],
+    "no-extra-boolean-cast": "off",
     "no-trailing-spaces": "error",
     "no-use-before-define": "error",
     "no-var": "error",
     "prefer-arrow-callback": "error",
     "prefer-const": "error",
     "prefer-template": "error",
-    "quotes": [
-      "error",
-      "single"
-    ],
-    "react/prop-types": "off",
     "semi": [
       "error",
       "always"

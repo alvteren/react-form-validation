@@ -117,6 +117,7 @@ export default (options = {}) => {
       delete this.errors[name];
       delete this.validators[name];
       delete this.inputs[name];
+      this.props.onErrorsChange(Object.assign({}, this.errors));
     };
 
     onSubmit = event => {
