@@ -11,13 +11,18 @@ const jss = create({
   insertionPoint: document.getElementById('jss-insertion-point')
 });
 
-import Application from './Application';
 import ErrorBoundary from './ErrorBoundary';
+
+import Base from './demos/Base';
+import Dynamic from './demos/Dynamic';
 
 ReactDOM.render(
   <ErrorBoundary>
     <JssProvider jss={jss}>
-      <Application />
+      <>
+        <Base />
+        <Dynamic />
+      </>
     </JssProvider>
   </ErrorBoundary>,
   document.getElementById('root')

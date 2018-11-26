@@ -1,4 +1,4 @@
-import './Application.scss';
+import './Base.scss';
 
 import React, { PureComponent } from 'react';
 
@@ -6,11 +6,11 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 
-import Checkbox from './components/UI/Checkbox';
-import Form from './components/UI/Form';
-import TextField from './components/UI/TextField';
+import Checkbox from '../../components/UI/Checkbox';
+import Form from '../../components/UI/Form';
+import TextField from '../../components/UI/TextField';
 
-export default class Application extends PureComponent {
+export default class Base extends PureComponent {
   state = {
     username: '',
     password: '',
@@ -54,7 +54,7 @@ export default class Application extends PureComponent {
     const { username, password, confirm, accept, showEmail, email, errors } = this.state;
 
     return (
-      <Paper className="application">
+      <Paper className="base">
         <Typography variant="headline" align="center">
           Sign In
         </Typography>
@@ -65,7 +65,7 @@ export default class Application extends PureComponent {
         >
           <TextField
             name="username"
-            label="Username"
+            label="Username *"
             value={username}
             onChange={this.onChange}
             validate="required|between:6,20"
@@ -76,7 +76,7 @@ export default class Application extends PureComponent {
           <TextField
             type="password"
             name="password"
-            label="Password"
+            label="Password *"
             value={password}
             onChange={this.onChange}
             validate="required|min:8"
@@ -88,7 +88,7 @@ export default class Application extends PureComponent {
           <TextField
             type="password"
             name="confirm"
-            label="Confirm password"
+            label="Confirm password *"
             value={confirm}
             onChange={this.onChange}
             validate="required|confirms:password"
@@ -114,7 +114,7 @@ export default class Application extends PureComponent {
           {showEmail && (
             <TextField
               name="email"
-              label="E-Mail"
+              label="E-Mail *"
               value={email}
               onChange={this.onChange}
               validate="required|email"
@@ -124,7 +124,7 @@ export default class Application extends PureComponent {
             />
           )}
           <Button
-            className="application__submit"
+            className="base__submit"
             type="submit"
             color="primary"
             variant="contained"
@@ -133,7 +133,7 @@ export default class Application extends PureComponent {
             Submit
           </Button>
           <Button
-            className="application__submit"
+            className="base__submit"
             type="button"
             color="secondary"
             onClick={this.addError}
